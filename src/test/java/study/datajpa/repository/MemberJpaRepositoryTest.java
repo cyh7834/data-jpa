@@ -7,6 +7,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import study.datajpa.entity.Member;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @Transactional
@@ -28,4 +30,28 @@ class MemberJpaRepositoryTest {
         Assertions.assertEquals(savedMember, findMember);
     }
 
+    @Test
+    public void basicCRUD() {
+        Member member1 = new Member("member1");
+        Member member2 = new Member("member2");
+
+        memberJpaRepository.save(member1);
+        memberJpaRepository.save(member2);
+
+        Member findMember1 = memberJpaRepository.find(member1.getId());
+        Member findMember2 = memberJpaRepository.find(member2.getId());
+
+        Assertions.assertEquals(findMember1, member1);
+        Assertions.assertEquals(findMember2, member2);
+
+        List<Member> all = memberJpaRepository.findAll();
+        Assertions.assertEquals(all.size(), 2);
+
+        memberJpaRepository.delete(member1);
+        memberJpaRepository.delete(member2);
+
+        Assertions.assertEquals(memberJpaRepository.count(), 0);
+
+
+    }
 }
