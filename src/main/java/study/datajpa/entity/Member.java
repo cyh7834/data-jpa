@@ -7,6 +7,7 @@ import javax.persistence.*;
 
 @Entity
 @Getter
+@Setter
 @Service
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(of = {"id", "username", "age"})
